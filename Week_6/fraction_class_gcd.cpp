@@ -1,4 +1,5 @@
 #include <iostream>
+#include <numeric>
 using namespace std;
 
 class Fraction {
@@ -9,28 +10,11 @@ class Fraction {
 
         // Simplifying our fraction
         void simplify() {
-            // Not necessarily very pretty code. It could have been a lot better
-            // with a list of the primes.
-            //
-            // We start with a counter at two (because it doesn't matter checking one),
-            // and then we go through the whole numbers checking whether both our
-            // numerator and denominator are divisible with the number, if it is the
-            // case both are divied and hence simplified.
-            // We do this as long as both numerator and denominator are smaller than
-            // the counter which we are checking.
-            unsigned int counter = 2;
-            while(counter <= numerator && counter <= denominator) {
-                if (numerator % counter == 0 && denominator % counter == 0) {
-                    numerator /= counter;
-                    denominator /= counter;
-                    // If both were divisible we can reset the counter
-                    counter = 1;
-
-                }
-                // Incrementing the counter at the end of the while-loop.
-                counter++;
-
-            }
+            // Using the built-in gcd function
+            int for_division = gcd(numerator, denominator);
+            numerator /= for_division;
+            denominator /= for_division;
+            
         }
 
     public:
