@@ -20,11 +20,6 @@ int levenshtein_distance(string word_1, string word_2) {
     // Also gonna be using these A LOT..
     string word_1_suffix = word_1.substr(1);
     string word_2_suffix = word_2.substr(1);
-    cout << "Word 1: " << word_1 << endl;
-    cout << "and its suffix: " << word_1_suffix << endl << endl;
-
-    cout << "Word 2: " << word_2 << endl;
-    cout << "and its suffix: " << word_2_suffix << endl << endl;
 
     // Trying to create some more easily read code.
     // Where each part is an expression in the minimum function as, described
@@ -46,11 +41,7 @@ int main() {
     // Getting our two words
     cin >> word_1 >> word_2;
 
-    // cout << word_1 << endl;
-    // cout << word_2 << endl;
-
     cout << levenshtein_distance(word_1, word_2) << endl;
-    cout << "hej" << endl;
 
     return 0;
 }
