@@ -13,18 +13,30 @@ int levenshtein_distance(string word_1, string word_2) {
         return word_2_n;
 
     } else if (word_2_n == 0) {
-        word_1_n;
+        return word_1_n;
 
     }
 
     // Also gonna be using these A LOT..
-    string word_1_suffix = word_1.substr(1, word_1_n - 1);
-    string word_2_suffix = word_2.substr(1, word_2_n - 1);
+    string word_1_suffix = word_1.substr(1);
+    string word_2_suffix = word_2.substr(1);
+    cout << "Word 1: " << word_1 << endl;
+    cout << "and its suffix: " << word_1_suffix << endl << endl;
 
-    return min(min(levenshtein_distance(word_1_suffix, word_2) + 1, levenshtein_distance(word_1, word_2_suffix) + 1), levenshtein_distance(word_1_suffix, word_2_suffix) + (word_1[0] == word_2[0] ? 0 : 1) );
+    cout << "Word 2: " << word_2 << endl;
+    cout << "and its suffix: " << word_2_suffix << endl << endl;
 
+    // Trying to create some more easily read code.
+    // Where each part is an expression in the minimum function as, described
+    // in the exercise describtion. 
+    int part_1 = levenshtein_distance(word_1_suffix, word_2) + 1;
+    int part_2 = levenshtein_distance(word_1, word_2_suffix) + 1;
+    int part_3 = levenshtein_distance(word_1_suffix, word_2_suffix) + (word_1[0] == word_2[0] ? 0 : 1);
+
+    return min(min(part_1, part_2), part_3);
 
 }
+
 int main() {
     // Initializing our two words whcih we need to find
     // the distance of.
@@ -34,7 +46,11 @@ int main() {
     // Getting our two words
     cin >> word_1 >> word_2;
 
+    // cout << word_1 << endl;
+    // cout << word_2 << endl;
 
+    cout << levenshtein_distance(word_1, word_2) << endl;
+    cout << "hej" << endl;
 
     return 0;
 }
