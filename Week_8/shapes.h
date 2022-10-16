@@ -1,3 +1,6 @@
+#ifndef __shapes__
+#define __shapes__
+
 class Shape {
 
     public:
@@ -68,6 +71,7 @@ class Shape {
 };
 
 class Rectangle: public Shape{
+    // Rectangle inherits shape
     public:
         // Standard constructor: builds a rectangle (a x b)
         Rectangle(double width, double height);
@@ -76,25 +80,26 @@ class Rectangle: public Shape{
         Rectangle(const Rectangle & r);
 
         // Destructor
-        ~Rectangle(void);
+        ~Rectangle();
 
         // We apparently also need to define them in here
         //
         // I think it is such that Square can inherit them.
         virtual double area();
-        virtual double perimiter();
+        virtual double perimeter();
         virtual double height();
         virtual double width();
         virtual void rotate();
 
 
-    private:
-        double width;
-        double height;
+    protected:
+        double rect_width;
+        double rect_height;
 
 };
 
 class Square: public Rectangle{
+    // Square inherits Rectangle
     public:
         // Standard constructor: builds a square (length x length)
         Square(double length);
@@ -103,10 +108,7 @@ class Square: public Rectangle{
         Square(const Square & s);
 
         // Destructor
-        ~Square(void);
-
-    private:
-        double length;
+        ~Square();
 
 };
 
@@ -119,9 +121,19 @@ class Circle: public Shape{
         Circle(const Circle & c);
 
         // Destructor
-        ~Circle(void);
+        ~Circle();
+
+        // I am very confused as to why these needs to be declared
+        // in Circle...
+        double area();
+        double perimeter();
+        double height();
+        double width();
+        void rotate();
 
     private:
         double radius;
         
 };
+
+#endif // __shapes__
