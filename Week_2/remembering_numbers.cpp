@@ -3,7 +3,7 @@ using namespace std;
 
 int main() {
     int input;
-    int how_many_numbies = 1000;
+    int const how_many_numbies = 1000;
     int memory[how_many_numbies] = {};
     
     cin >> input;
