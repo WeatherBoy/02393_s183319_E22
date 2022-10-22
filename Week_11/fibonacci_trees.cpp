@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
 // Global variables because then I don't have to make
@@ -9,12 +8,18 @@ bool max_depth_reached = false;
 int max_depth = 0;
 int leaf_nodes = 0;
 int calls = 0;
-// A vector because then we don't have to work
-// with dynamic memory.
-// Praise C++ (over C).
-vector<int> fibonacci_numbers{};
 
-int fibonacci_tree(int n) {
+// Basic structure for a binary tree structure
+struct Node {
+    int val;            // Contains the value
+    Node *parent;       // pointer to the parent Node
+    Node *left_child;   // Pointer to the left child
+    Node *right_child;  // Pointer to the right child
+};
+
+int fibonacci_tree(int n, Node *curr_node) {
+    cout << "We reach fibonacci_tree" << endl;
+
     // simple recursive function for calculating the fibonacci sequence.
     //
     // Everytime we go into this function, then we have done an
@@ -38,49 +43,95 @@ int fibonacci_tree(int n) {
         // reached a leaf node in our "call tree".
         leaf_nodes++;
 
+        // Additionally we must show that we have reached a leaf Node
+        // and leaf Nodes are defined by not having children.
+        // Therefore its children shall be nullptrs.
+        curr_node->left_child = nullptr;
+        curr_node->right_child = nullptr;
+
         return 1;
 
     } else if (n < 0) {
-        // I think it was a mistake, this catch wasn't there on
-        // my first implementation.
+        // This should also be defined in this edge-case.
+        curr_node->left_child = nullptr;
+        curr_node->right_child = nullptr;
+
+        // I think it was a mistake, that the catch of this
+        // edge-case wasn't there on my first implementation.
         return 0;
 
     }
     
-    // This is such a hack solution.
-    // But I don't care at this point, I got mad because my
-    // solution for week 10 didn't work XD
-    int temp_1{};
-    int temp_2{};
+    // Creating Nodes which are supposed to function as the children
+    // of the node we just parsed.
+    // I have defined it such that their parent is the current Node.
+    Node *left_child{};
+    left_child->parent = curr_node;
+    Node *right_child{};
+    right_child->parent = curr_node;
     
-    temp_1 = fibonacci_tree(n - 1);
-    fibonacci_numbers.push_back(temp_1);
-    temp_2 = fibonacci_tree(n - 2);
-    fibonacci_numbers.push_back(temp_2);
 
-    return temp_1 + temp_2;
+    left_child->val = fibonacci_tree(n - 1, left_child);
+    right_child->val = fibonacci_tree(n - 2, right_child);
+
+    curr_node->left_child = left_child;
+    curr_node->right_child = right_child;
+
+    return left_child->val + right_child->val;
+}
+
+void callTreePreOrder(Node curr_node) {
+    cout << "We reach callTreePreOrder" << endl;
+
+    // Here it doesn't make as much sense to take a pointer as
+    // input, since we do not change the values of the Node.
+    cout << curr_node.val << " ";
+    if (curr_node.left_child != nullptr) {
+        // First we go down the left nodes.
+        //
+        // Dereferencing the pointer, such that it can be a
+        // valid input for this function which no longer takes
+        // a pointer.
+        callTreePreOrder(*curr_node.left_child);
+
+    }
+    if (curr_node.right_child != nullptr) {
+        // Secondly we go down the right Nodes.
+        //
+        // Dereferencing here as well.
+        callTreePreOrder(*curr_node.right_child);
+
+    }
+
+    // If both children are nullptr, then we have reached
+    // a leaf Node and can rightfully return.
+    return;
 }
 
 
 int main() {
+    cout << "We at least start the script..." << endl;
     // A temporary value for the input
     int temp_value{};
-    // The size of the "call tree"
-    int n = 0;
 
+    // Maybe this is a bit hack aswell.
+    cout << "We define an int?" << endl;
+    Node *root;
+    cout << "We define the root Node pointer" << endl;
+    root->parent = nullptr;
+    cout << "We make its parent a nullptr" << endl;
+
+    cout << "We try to take in a value" << endl;
     cin >> temp_value;
+    cout << "We get the value! Hurray. Success!" << endl;
 
-    fibonacci_numbers.push_back(fibonacci_tree(temp_value));
+    cout << "We get this far!!" << endl;
+    root->val = fibonacci_tree(temp_value, root);
 
-    // Defining the length of our input (minus one, because zero-indexing).
-    n = fibonacci_numbers.size() - 1;
+    
 
     cout << "Call tree in pre-order: ";
-    for (int i = n; i >= 0; i--) {
-        // Printing the output in reverse
-        cout << fibonacci_numbers[i] << " ";
-        
-    }
+    callTreePreOrder(*root);
     cout << "\nCall tree size: " << calls;
     cout << "\nCall tree depth: " << max_depth;
     cout << "\nCall tree leafs: " << leaf_nodes;
