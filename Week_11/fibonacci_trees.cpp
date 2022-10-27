@@ -18,8 +18,6 @@ struct Node {
 };
 
 int fibonacci_tree(int n, Node *curr_node) {
-    cout << "We reach fibonacci_tree" << endl;
-
     // simple recursive function for calculating the fibonacci sequence.
     //
     // Everytime we go into this function, then we have done an
@@ -65,9 +63,9 @@ int fibonacci_tree(int n, Node *curr_node) {
     // Creating Nodes which are supposed to function as the children
     // of the node we just parsed.
     // I have defined it such that their parent is the current Node.
-    Node *left_child{};
+    Node *left_child = new Node();
     left_child->parent = curr_node;
-    Node *right_child{};
+    Node *right_child = new Node();
     right_child->parent = curr_node;
     
 
@@ -81,8 +79,6 @@ int fibonacci_tree(int n, Node *curr_node) {
 }
 
 void callTreePreOrder(Node curr_node) {
-    cout << "We reach callTreePreOrder" << endl;
-
     // Here it doesn't make as much sense to take a pointer as
     // input, since we do not change the values of the Node.
     cout << curr_node.val << " ";
@@ -110,28 +106,24 @@ void callTreePreOrder(Node curr_node) {
 
 
 int main() {
-    cout << "We at least start the script..." << endl;
     // A temporary value for the input
     int temp_value{};
 
+    // REMEMBER!
+    // To instantiate your objects...
+    //
     // Maybe this is a bit hack aswell.
-    cout << "We define an int?" << endl;
-    Node *root;
-    cout << "We define the root Node pointer" << endl;
+    Node *root = new Node();
     root->parent = nullptr;
-    cout << "We make its parent a nullptr" << endl;
 
-    cout << "We try to take in a value" << endl;
     cin >> temp_value;
-    cout << "We get the value! Hurray. Success!" << endl;
 
-    cout << "We get this far!!" << endl;
     root->val = fibonacci_tree(temp_value, root);
 
-    
-
+    // Printing for CodeJudge
     cout << "Call tree in pre-order: ";
     callTreePreOrder(*root);
+
     cout << "\nCall tree size: " << calls;
     cout << "\nCall tree depth: " << max_depth;
     cout << "\nCall tree leafs: " << leaf_nodes;

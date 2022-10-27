@@ -34,7 +34,7 @@ class Shape {
         // be instantiated. Classes that contain at LEAST ONE
         // pure virtual function is considered abstract.
         // Although instances of an abstract class can't be
-        // instantiated a pointer to an abstract class can 
+        // instantiated, a pointer to an abstract class can 
         // still be made. With a pointer to a an abstract class
         // this pointer can even us the 'this' keyword to acces
         // a derived classes overwrite of its pure virtual
