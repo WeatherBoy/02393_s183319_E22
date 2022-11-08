@@ -46,8 +46,16 @@ List::~List(void) {
             delete temp_node->prev;
 
         }
-
-        delete temp_node->next;
+        ////////////////////////////////////////////////////////////////////
+        // REMEMBER:
+        // Tripple check when you delete memory, because what went wrong
+        // here was you were trying to delete the same memory twice.
+        // You basicly delete "this->first" on your first run through
+        // the while loop, but you also tried to delete "this->first",
+        // when you got to it the second time around...
+        ////////////////////////////////////////////////////////////////////
+        // delete temp_node->next;
+        
         delete temp_node;
         return;
     }
@@ -61,9 +69,12 @@ void List::insert(int n) {
     //
     // Why not just use pointers, I guess...
 
+    // REMEMBER!
+    // To instantiate your objects...
+    //
     // I create a temporary Node, which value (val) is gonna be
     // the n we wish to insert.
-    Node *temp_node;
+    Node *temp_node = new Node();
     temp_node->val = n;
 
     if (first == nullptr) {
@@ -148,13 +159,20 @@ void List::reverse(void) {
         Node *temp_node = first;
         // We create the temporary next, such that we don't get into
         // complications when we overwrite it.
-        Node *temp_next;
+        //
+        ////////////////////////////////////////////////////////////////////
+        // REMEMBER:
+        // You shouldn't use the "new" keyword if you immediatly assign the
+        // the object a value.
+        // This is the case here.
+        ////////////////////////////////////////////////////////////////////
+        Node *temp_next; // = new Node();
 
         // We then make the previously last Node into the new member variable
         // 'first'.
         this->first = first->prev;
 
-        while (temp_node == first) {
+        while (temp_node != first) {
             // As long as the current Node isn't first, then we reverse the
             // pointers.
             temp_next = temp_node->next;
@@ -185,7 +203,7 @@ void List::print(void) {
     if (first != nullptr) {
         // If first isn't the nullptr, then we can print
         // its value.
-        cout << first->val;
+        cout << first->val << " ";
 
         // Temporary node for printing.
         Node * temp_node = first;
@@ -197,10 +215,11 @@ void List::print(void) {
                 // We print in that awkward manner, because it
                 // is a fence-post problem.
                 temp_node = temp_node->next;
-                cout << ", " << temp_node->val;
+                cout << temp_node->val << " ";
 
             }
     }
+    cout << endl;
 
     return;
 }
