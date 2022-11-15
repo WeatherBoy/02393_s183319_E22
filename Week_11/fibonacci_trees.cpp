@@ -17,7 +17,7 @@ struct Node {
     Node *right_child;  // Pointer to the right child
 };
 
-int fibonacci_tree(int n, Node *curr_node) {
+int fibonacciTree(int n, Node *curr_node) {
     // simple recursive function for calculating the fibonacci sequence.
     //
     // Everytime we go into this function, then we have done an
@@ -69,8 +69,8 @@ int fibonacci_tree(int n, Node *curr_node) {
     right_child->parent = curr_node;
     
 
-    left_child->val = fibonacci_tree(n - 1, left_child);
-    right_child->val = fibonacci_tree(n - 2, right_child);
+    left_child->val = fibonacciTree(n - 1, left_child);
+    right_child->val = fibonacciTree(n - 2, right_child);
 
     curr_node->left_child = left_child;
     curr_node->right_child = right_child;
@@ -118,7 +118,7 @@ int main() {
 
     cin >> temp_value;
 
-    root->val = fibonacci_tree(temp_value, root);
+    root->val = fibonacciTree(temp_value, root);
 
     // Printing for CodeJudge
     cout << "Call tree in pre-order: ";

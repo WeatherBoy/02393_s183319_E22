@@ -2,7 +2,7 @@
 #include <math.h>
 using namespace std;
 
-int levenshtein_distance(string word_1, string word_2) {
+int levenshteinDistance(string word_1, string word_2) {
     // Defining the lengths because we are gonna be
     // using these A LOT..
     int word_1_n = word_1.length();
@@ -24,9 +24,9 @@ int levenshtein_distance(string word_1, string word_2) {
     // Trying to create some more easily read code.
     // Where each part is an expression in the minimum function as, described
     // in the exercise describtion. 
-    int part_1 = levenshtein_distance(word_1_suffix, word_2) + 1;
-    int part_2 = levenshtein_distance(word_1, word_2_suffix) + 1;
-    int part_3 = levenshtein_distance(word_1_suffix, word_2_suffix) + (word_1[0] == word_2[0] ? 0 : 1);
+    int part_1 = levenshteinDistance(word_1_suffix, word_2) + 1;
+    int part_2 = levenshteinDistance(word_1, word_2_suffix) + 1;
+    int part_3 = levenshteinDistance(word_1_suffix, word_2_suffix) + (word_1[0] == word_2[0] ? 0 : 1);
 
     return min(min(part_1, part_2), part_3);
 
@@ -41,7 +41,7 @@ int main() {
     // Getting our two words
     cin >> word_1 >> word_2;
 
-    cout << levenshtein_distance(word_1, word_2) << endl;
+    cout << levenshteinDistance(word_1, word_2) << endl;
 
     return 0;
 }
