@@ -19,7 +19,8 @@ string reverse(string s, int n){
 
 //Exercise 2 (b) Implement this function
 bool isPalindrome(string s, int n1, int n2){
-	if (n1 == n2 || ) {
+	// maybe look at that code once -->
+	if (n1 == n2 || false) {
 		// base case
 	}
 	if (s[n1] != s[n2]) {
